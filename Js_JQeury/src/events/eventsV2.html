@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Events V2</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="../jquery/jquery-3.1.1.js"></script>
+    <link rel='stylesheet' type='text/css' href='../styles/event.css'>
+</head>
+<body>
+    <div id="WorkArea">
+        <h5>Work Area</h5>
+        <hr />
+        <input type="button" class="clickable" value="Click me">
+    </div>
+    <div id="Messages">
+            <h5>Messages</h5>
+            <hr />
+        </div>
+</body>
+
+<script>
+$(function()
+{
+    var showEventMsg = function(options)
+        {   options = $.extend(
+            {   eventType : 'CLICK',
+                eventTarget : this,
+                suffix : '<br/>'
+            }, options);
+            var message = options.eventType + ': ' +
+                    (options.eventTarget.nodeName || 'unknown') +
+                    options.suffix;
+            $('#Messages').append(message);
+        };
+
+    $('.clickable').click(function()
+    {
+        showEventMsg.call(this, {suffix: '!<br/>'});
+        //showEventMsg.call({eventTarget: this});
+    });
+});
+</script>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>jQuery Object Deferred Object 4</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='../styles/jQuery.css'>
+    <script src="../jquery/jquery-3.1.1.js"></script>
+</head>
+<body>
+    
+    <input id="Load" type="button" value="Load"/>
+    <div id="Section1"></div>
+    <div id="Section2"></div>
+    <div id="Section3"></div>
+    <input id="Proceed" type="button" value="Proceed" disabled="true"/>
+    <div id="Messages"></div>
+
+</body>
+<script>
+    $(function()
+    {
+        $('#Load').click(function()
+        {   $.when(
+            $.get('Content1.html', function(result)
+            {
+                $('#Section1').html(result);
+            }, 'html'),
+            $.get('Content2.html', function(result)
+            {
+                $('#Section2').html(result);
+            }, 'html'),
+            $.get('Content3.html', function(result)
+            {
+                $('#Section3').html(result);
+            }, 'html')
+        )
+        .then(function()
+        {
+            $('#Proceed').removeAttr('disabled');
+        })
+        });
+    });
+</script>
+</html>
