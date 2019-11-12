@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Events V1</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="../jquery/jquery-3.1.1.js"></script>
+    <link rel='stylesheet' type='text/css' href='../styles/event.css'>
+</head>
+<body>
+    <div id="WorkArea">
+        <h5>Work Area</h5>
+        <hr />
+        <input type="button" class="clickable" value="Click me">
+    </div>
+    <div id="Messages">
+            <h5>Messages</h5>
+            <hr />
+        </div>
+        
+</body>
+<script>
+$(function()
+{
+    $('.clickable').click(function()
+    {
+        $('#Messages').append('click occured<br/>');
+    });
+});
+
+</script>
+</html>

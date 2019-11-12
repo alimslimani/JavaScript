@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Events V5</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="../jquery/jquery-3.1.1.js"></script>
+    <link rel='stylesheet' type='text/css' href='../styles/event.css'>
+</head>
+<body>
+    <div id="WorkArea" class="clickable">
+        <h5 class="clickable">Work Area</h5>
+        <hr />
+        <input type="button" class="clickable" value="Click me">
+        <p class="clickable">
+            Click me, too!
+        </p>
+        <p class="clickable">This is some more text with an embedded
+            <span class="clickable">clickable</span> element.
+        </p>
+    </div>
+    <div id="Messages">
+            <h5>Messages</h5>
+            <hr />
+        </div>
+</body>
+
+<script>
+$(function()
+{
+    var showEventMsg = function(options)
+        {   options = $.extend(
+            {   eventType : 'CLICK',
+                eventTarget : this,
+                suffix : '<br/>'
+            }, options);
+            var message = options.eventType + ': ' +
+                    (options.eventTarget.nodeName || 'unknown') +
+                    options.suffix;
+            $('#Messages').append(message);
+        };
+
+    $('.clickable')
+    .off('click')
+    .on('click dblclick mousedown',function(event)
+    {
+        if(!event.isPropagationStopped() &&
+            !event.isImmediatePropagationStopped() &&
+            !event.isDefaultPrevented()){
+            showEventMsg.call(this, {eventType: event.type});
+            event.stopPropagation();
+            if(event.type ==='mousedown'){
+                event.preventDefault();
+            }
+        }
+    })
+    .on('mousedown',function(event)
+    {
+        if(!event.isPropagationStopped() &&
+            !event.isImmediatePropagationStopped() &&
+            !event.isDefaultPrevented()){
+            showEventMsg.call(this, {eventType:event.type,
+                                    suffix:'#2<br/>'});
+            }
+    })
+    .on('selectstart',function()
+    {
+        return false;
+    });
+});
+</script>
+
+</html>

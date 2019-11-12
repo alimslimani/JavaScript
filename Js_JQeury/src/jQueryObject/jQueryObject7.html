@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>jQuery Deferred Methods</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='../styles/jQuery.css'>
+    <script src="../jquery/jquery-3.1.1.js"></script>
+</head>
+<body>
+    
+    <input id="Load" type="button" value="Load"/>
+    <div id="Section1"></div>
+    <div id="Section2"></div>
+    <div id="Section3"></div>
+    <input id="Proceed" type="button" value="Proceed" disabled="true"/>
+    <div id="Messages"></div>
+
+</body>
+<script>
+    $(function()
+    {
+        var loadSection = function(options)
+        {
+            if(typeof options !=='object'){
+                options = {};
+            }
+            options.selector = options.selector || '';
+            options.url = options.url || '';
+            return $.get(options.url, function(result){
+                $(options.selector).html(result);
+            }, 'html');
+        }
+        $('#Load').click(function()
+        {
+            var myDefer = $.when(
+                loadSection({selector: '#Selection1', url: 'Content11.html'}),
+                loadSection({selector: '#Selection2', url: 'Content2.html'}),
+                loadSection({selector: '#Selection3', url: 'Content3.html'})
+            )
+           .promise()
+           .done(function()
+           {
+            $('#Messages').append('embedded done handler! <br />');
+           })
+           .done(function()
+           {
+                myDefer.done(function()
+                {
+                    $('#Messages').append('Second done handler! <br />');
+                })
+           })
+           .fail(function(result)
+           {
+               $('#Messages').append('Failure!<br />')
+                    .append('Result: '+result.statusText + '<br />');
+           })
+           .always(function()
+           {
+               $('#Proceed').removeAttr('disabled');
+           });
+           myDefer.done(function()
+           {
+               $('#Messages').append('additional done handler called!<br />');
+           });
+        });
+    });
+</script>
+</html>

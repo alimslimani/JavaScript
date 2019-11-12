@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Draw - Version 1</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>#theCanvas {background-image: -moz-radial-gradient(30px 30px, #FFF #EEF);}</style>
+</head>
+<body>
+    <canvas id="theCanvas">
+        Attention! Your browser does not support the Canvas
+    </canvas>
+</body>
+<script>
+    _KSM={
+        draw:function(){
+            //draw something in the canvas
+            var canvas = document.getElementById('theCanvas');
+            if(canvas.getContext){
+                var context= canvas.getContext('2d');
+                context.strokeStyle = 'black';
+                context.fillStyle = 'silver';
+                context.fillRect(10,10,100,100);
+                context.strokeRect(10,10,100,100);
+            }
+        }
+    }
+    _KSM.draw();
+</script>
+</html>
